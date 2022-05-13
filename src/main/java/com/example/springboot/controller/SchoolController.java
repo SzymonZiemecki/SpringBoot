@@ -21,15 +21,17 @@ public class SchoolController {
     private final SchoolService schoolService;
 
     @GetMapping("/schools")
-    public List<SchoolDto> getSchools(@RequestParam(required = false) int page, Sort.Direction sort) throws IllegalAccessException {
-        int pageNumber = page >= 0 ? page : 0;
-        return SchoolDtoMapper.mapToSchoolDtos(schoolService.getSchools(pageNumber,sort));
+    public List<SchoolDto> getSchools(@RequestParam(required = false) Integer page, Sort.Direction sort) throws IllegalAccessException {
+        int pageNumber = page != null && page >= 0 ? page : 0;
+        Sort.Direction sortDiection = sort != null ? sort : Sort.Direction.ASC;
+        return SchoolDtoMapper.mapToSchoolDtos(schoolService.getSchools(pageNumber,sortDiection));
     }
 
     @GetMapping("/schools/students")
-    public List<School> getSchoolsWithStudent(@RequestParam(required = false) int page, Sort.Direction sort) throws IllegalAccessException {
-        int pageNumber = page >= 0 ? page : 0;
-        return schoolService.getSchoolsWithStudents(pageNumber, sort);
+    public List<School> getSchoolsWithStudent(@RequestParam(required = false) Integer page, Sort.Direction sort) throws IllegalAccessException {
+        int pageNumber = page != null && page >= 0 ? page : 0;
+        Sort.Direction sortDiection = sort != null ? sort : Sort.Direction.ASC;
+        return schoolService.getSchoolsWithStudents(pageNumber, sortDiection);
     }
 
 

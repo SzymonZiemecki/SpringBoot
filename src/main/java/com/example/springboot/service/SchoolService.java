@@ -19,15 +19,15 @@ public class SchoolService {
 
     private final SchoolRepository schoolRepository;
     private final StudentRepository studentRepository;
-    private static final int PAGE_SIZE=5;
+    private static final int PAGE_SIZE = 5;
 
     public List<School> getSchoolsWithStudents(int page, Sort.Direction sort) {
-        List<School> allSchools = schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE, Sort.by(sort,"id")));
+        List<School> allSchools = schoolRepository.findAllSchools(PageRequest.of(page, PAGE_SIZE, Sort.by(sort, "id")));
         List<Long> ids = allSchools.stream()
                 .map(school -> school.getId())
                 .collect(Collectors.toList());
         List<Student> students = studentRepository.findAllBySchoolIdIn(ids);
-        allSchools.forEach(school->school.setStudentList(extractStudents(students,school.getId())));
+        allSchools.forEach(school -> school.setStudentList(extractStudents(students, school.getId())));
         return allSchools;
     }
 
@@ -37,8 +37,8 @@ public class SchoolService {
                 .collect(Collectors.toList());
     }
 
-    public List<School> getSchools(int page,Sort.Direction sort){
-        return schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE,Sort.by(sort,"id")));
+    public List<School> getSchools(int page, Sort.Direction sort) {
+        return schoolRepository.findAllSchools(PageRequest.of(page, PAGE_SIZE, Sort.by(sort, "id")));
     }
 
     public School getSingleSchool(long id) {
