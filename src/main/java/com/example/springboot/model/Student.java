@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 public class Student {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private long schoolId;
     private String Name;

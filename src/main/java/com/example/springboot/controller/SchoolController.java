@@ -6,10 +6,7 @@ import com.example.springboot.model.Student;
 import com.example.springboot.service.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,5 +35,20 @@ public class SchoolController {
     @GetMapping("/schools/{id}")
     public School getSingleSchool(@PathVariable long id) throws IllegalAccessException {
         return schoolService.getSingleSchool(id);
+    }
+
+    @PostMapping("/schools")
+    public School addSchool(@RequestBody School school){
+        return schoolService.addSchool(school);
+    }
+
+    @PutMapping("/schools")
+    public School editSchool(@RequestBody School school){
+        return schoolService.editSchool(school);
+    }
+
+    @DeleteMapping("/schools/{id}")
+    public void deleteSchool(long id){
+        schoolService.deleteSchool(id);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,5 +45,20 @@ public class SchoolService {
     public School getSingleSchool(long id) {
         return schoolRepository.findById(id)
                 .orElseThrow();
+    }
+
+    public School addSchool(School school) {
+        return schoolRepository.save(school);
+    }
+
+    @Transactional
+    public School editSchool(School school) {
+        School schoolEdited = schoolRepository.findById(school.getId()).orElseThrow();
+        schoolEdited.setName(school.getName());
+        return schoolEdited;
+    }
+
+    public void deleteSchool(long id) {
+        schoolRepository.deleteById(id);
     }
 }
