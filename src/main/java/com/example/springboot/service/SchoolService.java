@@ -7,6 +7,7 @@ import com.example.springboot.repositories.SchoolRepository;
 import com.example.springboot.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class SchoolService {
     private final StudentRepository studentRepository;
     private static final int PAGE_SIZE=5;
 
-    public List<School> getSchoolsWithStudents(int page) {
-        List<School> allSchools = schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE));
+    public List<School> getSchoolsWithStudents(int page, Sort.Direction sort) {
+        List<School> allSchools = schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE, Sort.by(sort,"id")));
         List<Long> ids = allSchools.stream()
                 .map(school -> school.getId())
                 .collect(Collectors.toList());
@@ -36,8 +37,8 @@ public class SchoolService {
                 .collect(Collectors.toList());
     }
 
-    public List<School> getSchools(int page){
-        return schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE));
+    public List<School> getSchools(int page,Sort.Direction sort){
+        return schoolRepository.findAllSchools(PageRequest.of(page,PAGE_SIZE,Sort.by(sort,"id")));
     }
 
     public School getSingleSchool(long id) {
